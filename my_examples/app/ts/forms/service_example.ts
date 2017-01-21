@@ -21,7 +21,7 @@ let users: Array<User> = [user1, user2, user3];
     <h2 class="ui header">Demo Form1: with ng-model</h2>
 
     <div class="ui info message">
-      The product name is: {{productName}}
+      The user name is: {{userName}}
     </div>
 
     <form [formGroup]="myForm"
@@ -29,12 +29,12 @@ let users: Array<User> = [user1, user2, user3];
           class="ui form">
 
       <div class="field">
-        <label for="productNameInput">Product Name1</label>
+        <label for="userNameInput">User name</label>
         <input type="text"
-               id="productNameInput"
+               id="userNameInput"
                placeholder="Product Name"
-               [formControl]="myForm.get('productName')"
-               [(ngModel)]="productName">
+               [formControl]="myForm.get('userName')"
+               [(ngModel)]="userName">
       </div>
 
       <div *ngIf="!myForm.valid"
@@ -47,24 +47,27 @@ let users: Array<User> = [user1, user2, user3];
 })
 export class ServiceExample {
     myForm: FormGroup;
-    productName: string;
+    userName: string;
     currentUser: User;
 
     constructor(fb: FormBuilder, public userService: UserService) {
         this.myForm = fb.group({
-            'productName': ['', Validators.required]
+            'userName': ['', Validators.required]
         });
         userService.setCurrentUser(user1);
     }
 
-    onSubmit(value: string): void {
+    onSubmit(userName: string): void {
         let foundUser: User;
         for (let user of users) {
-            if (value == user.name) {
+            if (this.userName.startsWith(user.name)) {
                 foundUser = user;
+                break;
             }
         }
+
         if (foundUser) {
+            console.log('onSubmit - set user  to: ' + foundUser.name);
             this.userService.setCurrentUser(foundUser);
         } else {
             console.log('User not found. Available users: GreenUser, BlueUser, RedUser');
@@ -74,13 +77,13 @@ export class ServiceExample {
 
     ngOnInit(): void {
         this.userService.currentUser.subscribe({
-            next: (v) => console.log('ngOnInit - observerA: ' + v.name)
+            next: (v) => console.log('observerA - user changed to: ' + v.name)
         })
         this.userService.currentUser
             .subscribe(
                 (user: User) => {
                     this.currentUser = user;
-                    console.log('ngOnInit - current user: ' + user.name);
+                    console.log('observerB - user changed to: ' + user.name);
                 });
     }
 }

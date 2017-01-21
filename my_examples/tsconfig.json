@@ -15,8 +15,8 @@
     "!./node_modules/**/*.ts",
     "!./tmp/*.ts"
   ],
-  "compileOnSave": true,
-  "buildOnSave": true,
+  "compileOnSave": false,
+  "buildOnSave": false,
   "atom": { "rewriteTsconfig": false },
   "exclude": [
     "typings/main.d.ts",
