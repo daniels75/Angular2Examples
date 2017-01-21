@@ -12,22 +12,31 @@ var core_1 = require('@angular/core');
 var forms_1 = require('@angular/forms');
 var models_1 = require('../models');
 var UserService_1 = require("../services/UserService");
-var bot1 = new models_1.User('Green Bot', require('images/avatars/female-avatar-1.png'));
-var bot2 = new models_1.User('Blue Bot', require('images/avatars/female-avatar-2.png'));
-var bot3 = new models_1.User('Red Bot', require('images/avatars/male-avatar-1.png'));
-var users = [bot1, bot2, bot3];
+var user1 = new models_1.User('GreenUser', require('images/avatars/female-avatar-1.png'));
+var user2 = new models_1.User('BlueUser', require('images/avatars/female-avatar-2.png'));
+var user3 = new models_1.User('RedUser', require('images/avatars/male-avatar-1.png'));
+var users = [user1, user2, user3];
 var ServiceExample = (function () {
     function ServiceExample(fb, userService) {
         this.userService = userService;
         this.myForm = fb.group({
             'productName': ['', forms_1.Validators.required]
         });
-        userService.setCurrentUser(bot1);
+        userService.setCurrentUser(user1);
     }
     ServiceExample.prototype.onSubmit = function (value) {
+        var foundUser;
         for (var _i = 0, users_1 = users; _i < users_1.length; _i++) {
             var user = users_1[_i];
-            console.log('Submited user: ' + user.name);
+            if (value == user.name) {
+                foundUser = user;
+            }
+        }
+        if (foundUser) {
+            this.userService.setCurrentUser(foundUser);
+        }
+        else {
+            console.log('User not found. Available users: GreenUser, BlueUser, RedUser');
         }
     };
     ServiceExample.prototype.ngOnInit = function () {
