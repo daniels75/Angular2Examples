@@ -8,12 +8,12 @@ import {User, Thread, Message} from '../models';
 import {UserService} from "../services/UserService";
 
 // the person using the app us Juliet
-let dan: User      = new User('Daniels', require('images/avatars/female-avatar-1.png'));
-let bot1: User = new User('Lady Capulet', require('images/avatars/female-avatar-2.png'));
-let bot2: User    = new User('Echo Bot', require('images/avatars/male-avatar-1.png'));
-let bot3: User     = new User('Reverse Bot', require('images/avatars/female-avatar-4.png'));
-let bot4: User    = new User('Waiting Bot', require('images/avatars/male-avatar-2.png'));
+let bot1: User      = new User('Green Bot', require('images/avatars/female-avatar-1.png'));
+let bot2: User =   new User('Blue Bot', require('images/avatars/female-avatar-2.png'));
+let bot3: User    = new User('Red Bot', require('images/avatars/male-avatar-1.png'));
 
+
+let users: Array<User> = [bot1, bot2, bot3];
 @Component({
   selector: 'service-example',
   template: `
@@ -54,23 +54,25 @@ export class DemoFormNgModel {
     this.myForm = fb.group({
       'productName':  ['', Validators.required]
     });
-    userService.setCurrentUser(dan);
+    userService.setCurrentUser(bot1);
   }
 
   onSubmit(value: string): void {
-    console.log('you submitted value: ', value);
-    console.log('onSubmit: current user: ' +  this.currentUser.name + ' userId: ' + this.currentUser.id);
+    for (let user of users) {
+      console.log('Submited user: ' +  user.name );
+    }
+
   }
 
   ngOnInit(): void {
     this.userService.currentUser.subscribe({
-      next: (v) => console.log('ngOnInit - observerA: ' + v.name + ' userId: ' + v.id)
+      next: (v) => console.log('ngOnInit - observerA: ' + v.name )
     })
     this.userService.currentUser
         .subscribe(
             (user: User) => {
               this.currentUser = user;
-              console.log('ngOnInit - current user: ' +  user.name + ' userId: ' + user.id);
+              console.log('ngOnInit - current user: ' +  user.name );
             });
   }
 }

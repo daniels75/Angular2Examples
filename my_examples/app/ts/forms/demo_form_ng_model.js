@@ -12,32 +12,33 @@ var core_1 = require('@angular/core');
 var forms_1 = require('@angular/forms');
 var models_1 = require('../models');
 var UserService_1 = require("../services/UserService");
-var dan = new models_1.User('Daniels', require('images/avatars/female-avatar-1.png'));
-var bot1 = new models_1.User('Lady Capulet', require('images/avatars/female-avatar-2.png'));
-var bot2 = new models_1.User('Echo Bot', require('images/avatars/male-avatar-1.png'));
-var bot3 = new models_1.User('Reverse Bot', require('images/avatars/female-avatar-4.png'));
-var bot4 = new models_1.User('Waiting Bot', require('images/avatars/male-avatar-2.png'));
+var bot1 = new models_1.User('Green Bot', require('images/avatars/female-avatar-1.png'));
+var bot2 = new models_1.User('Blue Bot', require('images/avatars/female-avatar-2.png'));
+var bot3 = new models_1.User('Red Bot', require('images/avatars/male-avatar-1.png'));
+var users = [bot1, bot2, bot3];
 var DemoFormNgModel = (function () {
     function DemoFormNgModel(fb, userService) {
         this.userService = userService;
         this.myForm = fb.group({
             'productName': ['', forms_1.Validators.required]
         });
-        userService.setCurrentUser(me);
+        userService.setCurrentUser(bot1);
     }
     DemoFormNgModel.prototype.onSubmit = function (value) {
-        console.log('you submitted value: ', value);
-        console.log('onSubmit: current user: ' + this.currentUser.name + ' userId: ' + this.currentUser.id);
+        for (var _i = 0, users_1 = users; _i < users_1.length; _i++) {
+            var user = users_1[_i];
+            console.log('Submited user: ' + user.name);
+        }
     };
     DemoFormNgModel.prototype.ngOnInit = function () {
         var _this = this;
         this.userService.currentUser.subscribe({
-            next: function (v) { return console.log('ngOnInit - observerA: ' + v.name + ' userId: ' + v.id); }
+            next: function (v) { return console.log('ngOnInit - observerA: ' + v.name); }
         });
         this.userService.currentUser
             .subscribe(function (user) {
             _this.currentUser = user;
-            console.log('ngOnInit - current user: ' + user.name + ' userId: ' + user.id);
+            console.log('ngOnInit - current user: ' + user.name);
         });
     };
     DemoFormNgModel = __decorate([
