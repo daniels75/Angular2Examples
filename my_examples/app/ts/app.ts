@@ -28,8 +28,8 @@ import {utilInjectables} from './util/util';
 /*
  * Our Demos
  */
-import {DemoFormNgModel} from
-  './forms/demo_form_ng_model';
+import {ServiceExample} from
+    './forms/service_example';
 
 /*
  * Webpack
@@ -48,7 +48,7 @@ class FormsDemoApp {
 @NgModule({
   declarations: [
     FormsDemoApp,
-    DemoFormNgModel
+    ServiceExample
   ],
   imports: [
     BrowserModule,

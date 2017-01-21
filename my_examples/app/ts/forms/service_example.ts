@@ -45,7 +45,7 @@ let users: Array<User> = [bot1, bot2, bot3];
   </div>
   `
 })
-export class DemoFormNgModel {
+export class ServiceExample {
   myForm: FormGroup;
   productName: string;
   currentUser: User;

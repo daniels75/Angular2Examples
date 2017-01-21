@@ -19,7 +19,7 @@ require('../images/ng-book-2-minibook.png');
 require('../images/favicon-32x32.png');
 require('../images/favicon.ico');
 var services_1 = require('./services/services');
-var demo_form_ng_model_1 = require('./forms/demo_form_ng_model');
+var service_example_1 = require('./forms/service_example');
 var FormsDemoApp = (function () {
     function FormsDemoApp() {
     }
@@ -39,7 +39,7 @@ var FormsDemoAppModule = (function () {
         core_2.NgModule({
             declarations: [
                 FormsDemoApp,
-                demo_form_ng_model_1.DemoFormNgModel
+                service_example_1.ServiceExample
             ],
             imports: [
                 platform_browser_1.BrowserModule,
