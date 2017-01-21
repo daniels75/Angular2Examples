@@ -18,54 +18,44 @@ let users: Array<User> = [user1, user2, user3];
     selector: 'service-example',
     template: `
   <div class="ui raised segment">
-    <h2 class="ui header">Demo Form1: with ng-model</h2>
-
     <div class="ui info message">
-      The user name is: {{userName}}
+      The current user name is: {{currentUser.name}}
     </div>
-
-    <form [formGroup]="myForm"
-          (ngSubmit)="onSubmit(myForm.value)"
+    
+    <form #f="ngForm"
+          (ngSubmit)="onSubmit(f.value)"
           class="ui form">
 
       <div class="field">
-        <label for="userNameInput">User name</label>
+        <label for="userInput">User</label>
+        
         <input type="text"
-               id="userNameInput"
-               placeholder="Product Name"
-               [formControl]="myForm.get('userName')"
-               [(ngModel)]="userName">
+               id="userInput"
+               placeholder="User name"
+               name="userName" ngModel>
       </div>
 
-      <div *ngIf="!myForm.valid"
-        class="ui error message">Form is invalid</div>
       <button type="submit" class="ui button">Submit</button>
     </form>
-
   </div>
   `
 })
 export class ServiceExample {
-    myForm: FormGroup;
     userName: string;
     currentUser: User;
 
-    constructor(fb: FormBuilder, public userService: UserService) {
-        this.myForm = fb.group({
-            'userName': ['', Validators.required]
-        });
+    constructor( public userService: UserService) {
         userService.setCurrentUser(user1);
     }
-
-    onSubmit(userName: string): void {
+    onSubmit(form: any): void {
+        console.log('Submitted value:', form.userName);
+        let submitedValue:string = form.userName;
         let foundUser: User;
         for (let user of users) {
-            if (this.userName.startsWith(user.name)) {
+            if (user.name == submitedValue) {
                 foundUser = user;
-                break;
             }
         }
-
         if (foundUser) {
             console.log('onSubmit - set user  to: ' + foundUser.name);
             this.userService.setCurrentUser(foundUser);
